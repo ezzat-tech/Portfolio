@@ -996,16 +996,52 @@ footer p {
         display: block;
     }
 
+    .hero {
+        padding-top: 100px;
+        text-align: center;
+    }
+
+    .hero-content {
+        align-items: center;
+        text-align: center;
+    }
+
     .hero-heading {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+        text-align: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .hero h2 {
+        font-size: 1.4rem;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero p {
+        font-size: 1rem;
+        margin-bottom: 2.5rem;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .hero-cta {
         flex-direction: column;
+        align-items: center;
         width: 100%;
+        max-width: 320px;
+        margin-left: auto;
+        margin-right: auto;
+        gap: 1.2rem;
     }
 
     .hero-cta .btn {
         width: 100%;
+        justify-content: center;
+        text-align: center;
+        padding: 1rem 1.8rem;
     }
 }
