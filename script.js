@@ -10,6 +10,44 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // --- 1b. Mobile Menu Toggle ---
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+
+    function closeMobileMenu() {
+        navLinks.classList.remove('mobile-open');
+        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        document.body.style.overflow = '';
+        const overlay = document.querySelector('.mobile-overlay');
+        if (overlay) overlay.remove();
+    }
+
+    function openMobileMenu() {
+        navLinks.classList.add('mobile-open');
+        mobileMenuBtn.innerHTML = '<i class="fas fa-times"></i>';
+        document.body.style.overflow = 'hidden';
+        // Create backdrop overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'mobile-overlay';
+        overlay.addEventListener('click', closeMobileMenu);
+        document.body.appendChild(overlay);
+    }
+
+    if (mobileMenuBtn && navLinks) {
+        mobileMenuBtn.addEventListener('click', () => {
+            if (navLinks.classList.contains('mobile-open')) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        });
+
+        // Close menu when a nav link is clicked
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+    }
+
     // --- 2. Particles.js Configuration ---
     // A network-like geometry to fit the Data/AI theme
     if (window.particlesJS) {

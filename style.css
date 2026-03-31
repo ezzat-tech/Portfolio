@@ -48,6 +48,11 @@ body {
     position: relative;
 }
 
+html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
 /* Background Particles Container */
 #particles-js {
     position: fixed;
@@ -302,12 +307,6 @@ a {
     50%,
     100% {
         opacity: 0;
-    }
-}
-
-@media (max-width: 480px) {
-    .hero-typewriter {
-        white-space: normal;
     }
 }
 
@@ -975,6 +974,77 @@ footer p {
     transition-delay: 0.5s;
 }
 
+/* =========================================
+   MOBILE NAVIGATION OVERLAY
+========================================= */
+.nav-links.mobile-open {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 100vh;
+    background: rgba(7, 11, 25, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 5rem 2rem 2rem;
+    gap: 0;
+    z-index: 999;
+    border-left: 1px solid var(--glass-border);
+    box-shadow: -8px 0 30px rgba(0, 0, 0, 0.5);
+    animation: slideInRight 0.3s ease forwards;
+}
+
+.nav-links.mobile-open li {
+    opacity: 0;
+    animation: fadeInItem 0.3s ease forwards;
+}
+
+.nav-links.mobile-open li:nth-child(1) { animation-delay: 0.05s; }
+.nav-links.mobile-open li:nth-child(2) { animation-delay: 0.1s; }
+.nav-links.mobile-open li:nth-child(3) { animation-delay: 0.15s; }
+.nav-links.mobile-open li:nth-child(4) { animation-delay: 0.2s; }
+.nav-links.mobile-open li:nth-child(5) { animation-delay: 0.25s; }
+.nav-links.mobile-open li:nth-child(6) { animation-delay: 0.3s; }
+
+.nav-links.mobile-open a {
+    font-size: 1.15rem;
+    display: block;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+@keyframes fadeInItem {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* =========================================
+   RESPONSIVE — TABLET (≤ 900px)
+========================================= */
 @media (max-width: 900px) {
     .about-grid {
         grid-template-columns: 1fr;
@@ -984,48 +1054,99 @@ footer p {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
+
+    .projects-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+
+    .section {
+        padding: 4rem 0;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
 }
 
+/* =========================================
+   RESPONSIVE — MOBILE (≤ 768px)
+========================================= */
 @media (max-width: 768px) {
+    /* --- Container --- */
+    .container {
+        padding: 0 1.25rem;
+    }
+
+    /* --- Navigation --- */
     .nav-links {
         display: none;
-        /* Hide for simple implementation, can add toggle later */
     }
 
     .mobile-menu-btn {
         display: block;
     }
 
+    .glass-nav {
+        padding: 1rem 0;
+    }
+
+    .glass-nav.scrolled {
+        padding: 0.75rem 0;
+    }
+
+    /* --- Hero Section --- */
     .hero {
-        padding-top: 100px;
+        min-height: 100svh; /* use small viewport height for mobile */
+        padding-top: 80px;
         text-align: center;
+        overflow: hidden;
     }
 
     .hero-content {
         align-items: center;
         text-align: center;
-    }
-
-    .hero-heading {
-        font-size: 2.2rem;
-        text-align: center;
-        justify-content: center;
+        max-width: 100%;
+        overflow: hidden;
         width: 100%;
     }
 
+    .hero-heading {
+        font-size: 1.75rem;
+        text-align: center;
+        width: 100%;
+        min-height: auto;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+    }
+
+    .hero-typewriter {
+        white-space: normal !important;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        display: inline;
+    }
+
+    .hero-heading .highlight {
+        display: inline;
+    }
+
     .hero h2 {
-        font-size: 1.4rem;
+        font-size: 1.25rem;
         text-align: center;
         margin-left: auto;
         margin-right: auto;
     }
 
     .hero p {
-        font-size: 1rem;
-        margin-bottom: 2.5rem;
+        font-size: 0.95rem;
+        margin-bottom: 2rem;
         text-align: center;
         margin-left: auto;
         margin-right: auto;
+        max-width: 100%;
+        line-height: 1.6;
     }
 
     .hero-cta {
@@ -1035,13 +1156,256 @@ footer p {
         max-width: 320px;
         margin-left: auto;
         margin-right: auto;
-        gap: 1.2rem;
+        gap: 0.75rem;
+        margin-bottom: 2.5rem;
     }
 
     .hero-cta .btn {
         width: 100%;
         justify-content: center;
         text-align: center;
-        padding: 1rem 1.8rem;
+        padding: 0.9rem 1.5rem;
+        font-size: 0.95rem;
+    }
+
+    /* --- Tech Ticker --- */
+    .tech-stack-ticker {
+        padding: 0.75rem 0;
+    }
+
+    .ticker-item {
+        font-size: 0.8rem;
+        gap: 0.35rem;
+    }
+
+    .ticker {
+        gap: 2rem;
+    }
+
+    /* --- Sections General --- */
+    .section {
+        padding: 3.5rem 0;
+    }
+
+    .section-title {
+        font-size: 1.75rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .section-subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 2rem;
+    }
+
+    /* --- About Section --- */
+    .about-text h3 {
+        font-size: 1.15rem;
+    }
+
+    .about-text p {
+        font-size: 0.92rem;
+    }
+
+    .stats-grid {
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.78rem;
+    }
+
+    /* --- Skills Section --- */
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .skills-category {
+        padding: 1.25rem;
+    }
+
+    .glass-card {
+        padding: 1.5rem;
+        border-radius: 12px;
+    }
+
+    .glass-card:hover {
+        transform: none; /* disable hover lift on touch */
+    }
+
+    /* --- Timeline --- */
+    .timeline {
+        padding-left: 24px;
+    }
+
+    .timeline::before {
+        left: 6px;
+    }
+
+    .timeline-item::before {
+        width: 12px;
+        height: 12px;
+        left: -24px;
+        top: 20px;
+    }
+
+    .timeline-content {
+        padding: 1.25rem 1.25rem;
+    }
+
+    .timeline-header h3 {
+        font-size: 1.1rem;
+    }
+
+    .timeline-header h4 {
+        font-size: 0.9rem;
+    }
+
+    .timeline-item ul li {
+        font-size: 0.9rem;
+        padding-left: 1.2rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .timeline-date {
+        font-size: 0.8rem;
+    }
+
+    /* --- Projects Section --- */
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+
+    .project-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .project-card p {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    .project-icon {
+        font-size: 1.5rem;
+    }
+
+    /* --- Contact Section --- */
+    .contact-wrapper {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 1.5rem;
+    }
+
+    .contact-info h3 {
+        font-size: 1.2rem;
+    }
+
+    .contact-info p {
+        font-size: 0.92rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .contact-list li {
+        font-size: 0.9rem;
+        gap: 0.75rem;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        padding: 0.85rem;
+        font-size: 0.95rem;
+    }
+
+    .contact-form .form-group {
+        margin-bottom: 1rem;
+    }
+}
+
+/* =========================================
+   RESPONSIVE — SMALL PHONES (≤ 480px)
+========================================= */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .hero-heading {
+        font-size: 1.65rem;
+    }
+
+    .hero-typewriter {
+        white-space: normal;
+    }
+
+    .hero h2 {
+        font-size: 1.1rem;
+    }
+
+    .hero p {
+        font-size: 0.88rem;
+    }
+
+    .hero-cta {
+        max-width: 100%;
+    }
+
+    .hero-cta .btn {
+        padding: 0.85rem 1.2rem;
+        font-size: 0.9rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .stat-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-align: left;
+    }
+
+    .stat-number {
+        font-size: 1.3rem;
+        min-width: 3rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .skills-tags {
+        gap: 0.4rem;
+    }
+
+    .skill-tag {
+        font-size: 0.72rem;
+        padding: 0.35rem 0.5rem;
+    }
+
+    .project-tags span {
+        font-size: 0.72rem;
+        padding: 0.25rem 0.5rem;
+    }
+
+    .timeline-content {
+        padding: 1rem;
+    }
+
+    .contact-wrapper {
+        padding: 1.25rem;
+    }
+
+    .social-links a {
+        width: 36px;
+        height: 36px;
+        font-size: 0.9rem;
     }
 }
